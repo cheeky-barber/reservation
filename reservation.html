@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Réserver — Cheeky-barber-réservation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="reservation.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="./"><span>Cheeky</span>barber-réservation</a>
+      <button class="burger" aria-label="Menu">☰</button>
+      <nav class="menu">
+        <a href="./">Accueil</a>
+        <a href="./#services">Prestations</a>
+        <a href="reservation.html" class="cta">Réserver</a>
+        <a href="./#slots">Créneaux</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page">
+    <h1>Réserver un créneau</h1>
+    <div id="selectedSlot" class="notice" style="display:none;"></div>
+
+    <form id="bookForm" class="card form">
+      <div class="grid form-grid">
+        <label>Prestation
+          <select name="service" id="svcSelect" required>
+            <option value="">— Choisir —</option>
+            <option value="Coupe homme + barbe" data-min="40">Coupe homme + barbe — 30€ — 40 min</option>
+<option value="Coupe homme/femme" data-min="25">Coupe homme/femme — 23€ — 25 min</option>
+<option value="Taper" data-min="20">Taper — 18€ — 20 min</option>
+<option value="Taper + barbe" data-min="30">Taper + barbe — 23€ — 30 min</option>
+<option value="Barbe" data-min="10">Barbe — 14€ — 10 min</option>
+<option value="Contours + barbe" data-min="15">Contours + barbe — 19€ — 15 min</option>
+<option value="Sourcils" data-min="5">Sourcils — 9€ — 5 min</option>
+<option value="Contours" data-min="10">Contours — 12€ — 10 min</option>
+<option value="Coupe enfant (-14 ans)" data-min="25">Coupe enfant (-14 ans) — 15€ — 25 min</option>
+          </select>
+        </label>
+
+        <label>Nom et prénom
+          <input type="text" name="name" required placeholder="Ton nom">
+        </label>
+
+        <label>Téléphone
+          <input type="tel" name="phone" required placeholder="+590…">
+        </label>
+
+        <label>E-mail
+          <input type="email" name="email" required placeholder="ton@email.com">
+        </label>
+
+        <label>Adresse (si à domicile)
+          <input type="text" name="address" placeholder="Les Abymes…">
+        </label>
+
+        <label>Créneau (ISO)
+          <input type="text" id="slotField" name="slotISO" required readonly>
+        </label>
+
+        <label>Commentaires
+          <textarea name="notes" rows="3" placeholder="Précisions…"></textarea>
+        </label>
+      </div>
+
+      <div class="deposit">
+        <p><strong>Acompte obligatoire</strong> pour valider ta réservation.</p>
+        <a class="btn primary" target="_blank" rel="noopener" href="https://pay.sumup.com/b2c/X0Y8LLHBXL">Payer l’acompte (SumUp)</a>
+        <label class="ck"><input type="checkbox" id="depositOk" required> J’ai payé l’acompte</label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn primary">Envoyer la réservation</button>
+        <span id="bookMsg" class="muted"></span>
+      </div>
+    </form>
+
+    <p class="hint">Acompte non remboursable si annulation &lt; 24h. Lundi→Samedi 8h–19h. Déplacement : +15€.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Cheeky-barber-réservation. Tous droits réservés.</p>
+    </div>
+  </footer>
+</body>
+</html>
