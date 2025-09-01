@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Status — Cheeky-barber</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:20px;background:#0f1115;color:#e8e9ee}
+    .card{background:#151823;border:1px solid #222638;border-radius:12px;padding:16px;margin-bottom:16px}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #222638;background:#C9A227;color:#0f1115;font-weight:700;cursor:pointer}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0f1119;border:1px solid #222638;border-radius:8px;padding:12px}
+    label{display:block;margin:8px 0}
+    input{padding:8px 10px;border-radius:10px;border:1px solid #222638;background:#0f1119;color:#e8e9ee}
+  </style>
+</head>
+<body>
+  <h1>Status des APIs</h1>
+
+  <div class="card">
+    <h2>1) Créneaux (lecture)</h2>
+    <p>Teste si la liste des créneaux s'affiche.</p>
+    <label>Durée (minutes) : <input id="mins" type="number" value="30" min="5" step="5"></label>
+    <label>Nombre de jours à regarder : <input id="days" type="number" value="3" min="1" max="30"></label>
+    <button id="btnSlots">Tester les créneaux</button>
+    <pre id="outSlots">—</pre>
+  </div>
+
+  <div class="card">
+    <h2>2) Réservation (écriture)</h2>
+    <p>Envoie un test à vide (le serveur doit répondre une erreur "Champs manquants" = il est bien en ligne).</p>
+    <button id="btnBook">Tester la réservation</button>
+    <pre id="outBook">—</pre>
+  </div>
+
+  <script>
+    const API_URL  = "https://script.google.com/macros/s/AKfycbzO9FABjXoJJfdcQ87IXhs6kdOwYSWfinskn80huSxqxexUh1wet-uw41j0d2zOKSmo/exec";
+    const BOOK_URL = "https://script.google.com/macros/s/AKfycbz2DZPOlTVocach8SD6WhmrM0DaMrAbTrZGNzKU2n3JMGGeXm3sv4HRzowvCvjaZTve/exec";
+
+    document.getElementById('btnSlots').onclick = async () => {
+      const mins = document.getElementById('mins').value || 30;
+      const days = document.getElementById('days').value || 3;
+      const out  = document.getElementById('outSlots');
+      out.textContent = 'Chargement…';
+      try {
+        const res = await fetch(`${API_URL}?days=${days}&min=${mins}`, { cache: 'no-store' });
+        const json = await res.json();
+        out.textContent = JSON.stringify(json, null, 2);
+      } catch (e) {
+        out.textContent = 'Erreur: ' + e;
+      }
+    };
+
+    document.getElementById('btnBook').onclick = async () => {
+      const out = document.getElementById('outBook');
+      out.textContent = 'Chargement…';
+      try {
+        const res = await fetch(BOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json' },
+          body: JSON.stringify({ ping: 'test' })
+        });
+        const json = await res.json();
+        out.textContent = JSON.stringify(json, null, 2);
+      } catch (e) {
+        out.textContent = 'Erreur: ' + e;
+      }
+    };
+  </script>
+</body>
+</html>
